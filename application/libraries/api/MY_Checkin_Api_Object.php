@@ -215,9 +215,9 @@ class Checkin_Api_Object extends Api_Object_Core {
 			    $data["checkins"][$i]['media'][(int)$j] = array(
 			    	"id" => $media->id,
 			    	"type" => $media->media_type,
-			    	"link" => url::convert_uploaded_to_abs($media->media_link),
-			    	"medium" => url::convert_uploaded_to_abs($media->media_medium),
-			    	"thumb" => url::convert_uploaded_to_abs($media->media_thumb)
+			    	"link" => $this->abs_upload_url.$media->media_link,
+			    	"medium" => $this->abs_upload_url.$media->media_medium,
+			    	"thumb" => $this->abs_upload_url.$media->media_thumb
 			    );
 			    $j++;
 			}
@@ -438,28 +438,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 
 			// Thumbnail
 			Image::factory($filename)->resize(89,59,Image::HEIGHT)
-				->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type);
-			
-			// Name the files for the DB
-			$media_link = $new_filename.$file_type;
-			$media_medium = $new_filename.'_m'.$file_type;
-			$media_thumb = $new_filename.'_t'.$file_type;
-			
-			// Okay, now we have these three different files on the server, now check to see
-			//   if we should be dropping them on the CDN
-			
-			if (Kohana::config("cdn.cdn_store_dynamic_content"))
-			{
-				$media_link = cdn::upload($media_link);
-				$media_medium = cdn::upload($media_medium);
-				$media_thumb = cdn::upload($media_thumb);
-				
-				// We no longer need the files we created on the server. Remove them.
-				$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
-				unlink($local_directory.$new_filename.$file_type);
-				unlink($local_directory.$new_filename.'_m'.$file_type);
-				unlink($local_directory.$new_filename.'_t'.$file_type);
-			}
+				->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type);	
 
 			// Remove the temporary file
 			unlink($filename);
@@ -469,9 +448,9 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$media_photo->location_id = $location_id;
 			$media_photo->checkin_id = $checkin_id;
 			$media_photo->media_type = 1; // Images
-			$media_photo->media_link = $media_link;
-			$media_photo->media_medium = $media_medium;
-			$media_photo->media_thumb = $media_thumb;
+			$media_photo->media_link = $new_filename.$file_type;
+			$media_photo->media_medium = $new_filename."_m".$file_type;
+			$media_photo->media_thumb = $new_filename."_t".$file_type;
 			$media_photo->media_date = date("Y-m-d H:i:s",time());
 			$media_photo->save();
 		}

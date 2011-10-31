@@ -82,6 +82,10 @@ class Locations_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_locations($where = array())
 	{
+	    //If type is pirate, returns yarrr 
+	    if($this->response_type == 'pirate'){
+	        return "YARRRRR";
+	    }
 		// Fetch the location items
 		$items = Location_Model::get_locations($where, $this->list_limit);
         
@@ -118,7 +122,7 @@ class Locations_Api_Object extends Api_Object_Core {
 		$data = array(
 			"payload" => array(
 			"domain" => $this->domain,
-			"locations" => $json_locations),
+			"dale_locations" => $json_locations),
 			"error" => $this->api_service->get_error_msg(0)
 		);
 

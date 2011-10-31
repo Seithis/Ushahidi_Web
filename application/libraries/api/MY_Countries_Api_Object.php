@@ -98,7 +98,10 @@ class Countries_Api_Object extends Api_Object_Core {
      */
     private function _get_countries($where = '', $limit = '')
     {
-
+        //If type is pirate, returns yarrr 
+	    if($this->response_type == 'pirate'){
+	        return "YARRRRR";
+	    }
         // Fetch countries
         $this->query = "SELECT id, iso, country as `name`, capital
             FROM `".$this->table_prefix."country` $where $limit";
@@ -142,7 +145,7 @@ class Countries_Api_Object extends Api_Object_Core {
         $data = array(
                 "payload" => array(
                     "domain" => $this->domain,
-                    "countries" => $json_countries
+                    "dale_countries" => $json_countries
                 ),
                 "error" => $this->api_service->get_error_msg(0)
         );
