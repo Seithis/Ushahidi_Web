@@ -84,9 +84,28 @@ class Admin_Controller extends Template_Controller
 		$this->auth->auto_login();
 
 		// Admin is not logged in, or this is a member (not admin)
+		//edited
 		if ( ! $this->auth->logged_in('login') OR $this->auth->logged_in('member'))
 		{
-			url::redirect('login');
+		
+		    $this->template->admin_name = "Default";
+		    $this->user = new User_Model(1);
+			$url = (!empty($_SERVER['HTTPS'])) ? "https://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] : "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+			$comp=url::site();
+			$comp .="admin/reports";
+			if(!strstr($url,$comp)){
+			    url::redirect('/members/login');
+			}
+			$comp.="/edit/";
+			if(!strstr($url,$comp)){
+			    url::redirect('/reports');
+			}
+		}
+		else{
+		// Get Session Information
+		//edited
+		    $this->user = new User_Model($_SESSION['auth_user']->id);
+		    $this->template->admin_name =$this->user->name;
 		}
 
 		// Set Table Prefix
@@ -95,18 +114,18 @@ class Admin_Controller extends Template_Controller
 
 		// Get the no. of items to display setting
 		$this->items_per_page = (int) Kohana::config('settings.items_per_page_admin');
-
-		// Get Session Information
-		$this->user = new User_Model($_SESSION['auth_user']->id);
+        
+        //edited
+		
 
 		// Check if user has the right to see the admin panel
 		if(admin::admin_access($this->user) == FALSE)
 		{
 			// This user isn't allowed in the admin panel
-			url::redirect('/');
+			//edited
+			//url::redirect('/');
 		}
-
-		$this->template->admin_name = $this->user->name;
+        
 
 		// Retrieve Default Settings
 		$this->template->site_name = Kohana::config('settings.site_name');

@@ -309,6 +309,7 @@ class admin_Core {
 	 */
 	public static function admin_access($user = FALSE)
 	{
+	    //Removed for editing
 		if($user !== FALSE){
 			foreach ($user->roles as $user_role)
 			{
@@ -319,5 +320,7 @@ class admin_Core {
 		}
 		
 		return FALSE;
+		//Added for editing
+		//return true;
 	}
 }

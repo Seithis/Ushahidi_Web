@@ -14,9 +14,9 @@
  */
 ?>
 			<div class="bg">
-				<h2>
+				<!-- Edited<h2>
 					<?php admin::reports_subtabs("edit"); ?>
-				</h2>
+				</h2> -->
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
 					<input type="hidden" name="save" id="save" value="">
 					<input type="hidden" name="location_id" id="location_id" value="<?php print $form['location_id']; ?>">
@@ -57,7 +57,7 @@
 								<ul>
 									<li><a href="#" class="btn_save"><?php echo strtoupper(Kohana::lang('ui_main.save_report'));?></a></li>
 									<li><a href="#" class="btn_save_close"><?php echo strtoupper(Kohana::lang('ui_main.save_close'));?></a></li>
-									<li><a href="<?php echo url::base().'admin/reports/';?>" class="btns_red"><?php echo strtoupper(Kohana::lang('ui_main.cancel'));?></a>&nbsp;&nbsp;&nbsp;</li>
+									<li><a href="<?php echo url::base().'reports/';?>" class="btns_red"><?php echo strtoupper(Kohana::lang('ui_main.cancel'));?></a>&nbsp;&nbsp;&nbsp;</li>
 									<?php if ($id) {?>
 									<li><a href="<?php echo $previous_url;?>" class="btns_gray">&laquo; <?php echo strtoupper(Kohana::lang('ui_main.previous'));?></a></li>
 									<li><a href="<?php echo $next_url;?>" class="btns_gray"><?php echo strtoupper(Kohana::lang('ui_main.next'));?> &raquo;</a></li>
@@ -482,7 +482,7 @@
 									echo "<li><a href=\"#\" class=\"btn_delete btns_red\">".strtoupper(Kohana::lang('ui_main.delete_report'))."</a></li>";
 								}
 								?>
-								<li><a href="<?php echo url::site().'admin/reports/';?>" class="btns_red"><?php echo strtoupper(Kohana::lang('ui_main.cancel'));?></a></li>
+								<li><a href="<?php echo url::site().'reports/';?>" class="btns_red"><?php echo strtoupper(Kohana::lang('ui_main.cancel'));?></a></li>
 							</ul>
 						</div>						
 					</div>
@@ -491,7 +491,7 @@
 				if($id)
 				{
 					// Hidden Form to Perform the Delete function
-					print form::open(url::site().'admin/reports/', array('id' => 'reportMain', 'name' => 'reportMain'));
+					print form::open(url::site().'reports/', array('id' => 'reportMain', 'name' => 'reportMain'));
 					$array=array('action'=>'d','incident_id[]'=>$id);
 					print form::hidden($array);
 					print form::close();

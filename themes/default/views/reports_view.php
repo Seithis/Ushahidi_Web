@@ -15,12 +15,12 @@
 
 		<h1 class="report-title"><?php
 			echo $incident_title;
-			
+			//Edited
 			// If Admin is Logged In - Allow For Edit Link
-			if ($logged_in)
-			{
+			
+			
 				echo " [&nbsp;<a href=\"".url::site()."admin/reports/edit/".$incident_id."\">".Kohana::lang('ui_main.edit')."</a>&nbsp;]";
-			}
+			
 		?></h1>
 	
 		<p class="report-when-where">
