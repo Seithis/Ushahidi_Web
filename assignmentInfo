@@ -1,0 +1,24 @@
+For assignment 2, I altered the functionality of Ushahidi to allow
+for the editing of reports, without being logged in. Once you
+actually know what to do, it's quite simple, but getting there was 
+difficult. I learned quickly that being logged in under admin made 
+a link to edit reports appear in the regular report viewing page, but
+I didn't know which file to change to make it appear, and looked in
+the applications/views folder. It wasn't there. It's actually in the
+default themes folder.
+
+The next thing I had to do was, now that people not logged in could
+get to the report editing area without manually typing it in, I needed
+to let them actually edit the reports. It would take entirely too
+much work to actually make a new web page to let them do it, and 
+probably too much to figure out exactly how it's done in the admin
+page and put it into the regular viewer for reports, so I decided
+to just remove the necessary permissions to do it from the admin page.
+As it turns out, that would take entirely too much work. I could comment
+out the checks for being an admin if I had to, but there's too many 
+things dependant on having privelages, and it requires a user name.
+To get around this, i just added an if statement to check if you're
+logged in, and if not, I created a fake user with admin privelages
+called 'guest', and just redirected you to the login page if you
+go outside the reports area, and if you leave the edit area but
+stay in reports, it just kicks you back to the normal reports area.
