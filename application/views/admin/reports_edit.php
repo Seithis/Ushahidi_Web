@@ -14,9 +14,9 @@
  */
 ?>
 			<div class="bg">
-				<!-- Edited<h2>
+				<h2>
 					<?php admin::reports_subtabs("edit"); ?>
-				</h2> -->
+				</h2> 
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
 					<input type="hidden" name="save" id="save" value="">
 					<input type="hidden" name="location_id" id="location_id" value="<?php print $form['location_id']; ?>">

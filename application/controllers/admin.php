@@ -84,29 +84,36 @@ class Admin_Controller extends Template_Controller
 		$this->auth->auto_login();
 
 		// Admin is not logged in, or this is a member (not admin)
-		//edited
+		//Edited
 		if ( ! $this->auth->logged_in('login') OR $this->auth->logged_in('member'))
 		{
-		
-		    $this->template->admin_name = "Default";
+		    //If not logged in, creates a fake user.
+		    //Checks to see if the user goes outside the reports area. Redirects 
+		    //to login for most, but if just within reports and not reports/edit,
+		    //goes back to the non-admin reports area.
+		    $this->template->admin_name = "Guest";
 		    $this->user = new User_Model(1);
+		    //gets the current full url
 			$url = (!empty($_SERVER['HTTPS'])) ? "https://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] : "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 			$comp=url::site();
 			$comp .="admin/reports";
+			//redirects to login if not in reports
 			if(!strstr($url,$comp)){
 			    url::redirect('/members/login');
 			}
 			$comp.="/edit/";
+			//redirects to non-admin reports if not in reports/edit
 			if(!strstr($url,$comp)){
 			    url::redirect('/reports');
 			}
 		}
-		else{
 		// Get Session Information
-		//edited
+		//Edited. Only does this in the event of being logged on.
+		else{
 		    $this->user = new User_Model($_SESSION['auth_user']->id);
 		    $this->template->admin_name =$this->user->name;
 		}
+		
 
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
@@ -122,7 +129,7 @@ class Admin_Controller extends Template_Controller
 		if(admin::admin_access($this->user) == FALSE)
 		{
 			// This user isn't allowed in the admin panel
-			//edited
+			//Edited. Removes check for admin privelages.
 			//url::redirect('/');
 		}
         

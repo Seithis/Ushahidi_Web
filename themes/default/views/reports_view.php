@@ -15,7 +15,7 @@
 
 		<h1 class="report-title"><?php
 			echo $incident_title;
-			//Edited
+			//Edited. Removed check for admin login for edit link.
 			// If Admin is Logged In - Allow For Edit Link
 			
 			
